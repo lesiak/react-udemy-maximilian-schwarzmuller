@@ -1,41 +1,51 @@
-import React, { Component } from 'react';
-import './App.css';
-import Person from './Person/Person';
+import React, { useState } from "react";
+import "./App.css";
+import Person from "./Person/Person";
 
-class App extends Component {
-
-  state = {
+const app = (props) => {
+  const [personsState, setPersonsState] = useState({
     persons: [
-      {name: 'Max', age: 28},
-      {name: 'Manu', age: 29},
-      {name: 'Stephanie', age: 26},
+      { name: "Max", age: 28 },
+      { name: "Manu", age: 29 },
+      { name: "Stephanie", age: 26 },
     ],
-    otherState: 'setState merges current state with the update, this is not removed'
-  }
+    otherState: "useState hook replaces the state, this is removed",
+  });
 
-  switchNameHandler = () => {
-    this.setState({
+  console.log(personsState);
+
+  const switchNameHandler = () => {
+    setPersonsState({
       persons: [
-        {name: 'Maximilian', age: 28},
-        {name: 'Manu', age: 29},
-        {name: 'Stephanie', age: 27},
-      ] 
+        { name: "Maximilian", age: 28 },
+        { name: "Manu", age: 29 },
+        { name: "Stephanie", age: 27 },
+      ],
     });
-  }
+  };
 
-  render() {
-    return (
-      <div className="App">
-        <h1>I'm a react app</h1>
-        <p>This is really working</p>
-        <button onClick={this.switchNameHandler}>Switch name</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>My hobbies: Racing</Person>
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
-        <p>{this.state.otherState}</p>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="App">
+      <h1>I'm a react app</h1>
+      <p>This is really working</p>
+      <button onClick={switchNameHandler}>Switch name</button>
+      <Person
+        name={personsState.persons[0].name}
+        age={personsState.persons[0].age}
+      />
+      <Person
+        name={personsState.persons[1].name}
+        age={personsState.persons[1].age}
+      >
+        My hobbies: Racing
+      </Person>
+      <Person
+        name={personsState.persons[2].name}
+        age={personsState.persons[2].age}
+      />
+      <p>{personsState.otherState}</p>
+    </div>
+  );
+};
 
-export default App;
+export default app;
