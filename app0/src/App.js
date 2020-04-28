@@ -16,6 +16,7 @@ const app = (props) => {
 
   const switchNameHandler = () => {
     setPersonsState({
+      ...personsState,
       persons: [
         { name: "Maximilian", age: 28 },
         { name: "Manu", age: 29 },
