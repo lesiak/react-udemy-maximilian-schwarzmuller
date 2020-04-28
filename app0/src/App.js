@@ -9,11 +9,18 @@ class App extends Component {
       {name: 'Max', age: 28},
       {name: 'Manu', age: 29},
       {name: 'Stephanie', age: 26},
-    ]
+    ],
+    otherState: 'setState merges current state with the update, this is not removed'
   }
 
   switchNameHandler = () => {
-    console.log('Was clicked');
+    this.setState({
+      persons: [
+        {name: 'Maximilian', age: 28},
+        {name: 'Manu', age: 29},
+        {name: 'Stephanie', age: 27},
+      ] 
+    });
   }
 
   render() {
@@ -25,6 +32,7 @@ class App extends Component {
         <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
         <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>My hobbies: Racing</Person>
         <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        <p>{this.state.otherState}</p>
       </div>
     );
   }
