@@ -9,10 +9,13 @@ const app = (props) => {
       { name: "Manu", age: 29 },
       { name: "Stephanie", age: 26 },
     ],
-    otherState: "useState hook replaces the state, this is removed",
   });
 
-  console.log(personsState);
+  const [otherState] = useState({
+    otherState: "You can have multiple states via multiple useState hooks",
+  });
+
+  console.log(personsState, otherState);
 
   const switchNameHandler = () => {
     setPersonsState({
@@ -44,7 +47,7 @@ const app = (props) => {
         name={personsState.persons[2].name}
         age={personsState.persons[2].age}
       />
-      <p>{personsState.otherState}</p>
+      <p>{otherState.otherState}</p>
     </div>
   );
 };
