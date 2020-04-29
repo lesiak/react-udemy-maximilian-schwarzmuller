@@ -53,9 +53,9 @@ class App extends Component {
         </header>
         <article>
           <UserInput />
-          <UserOutput />
-          <UserOutput />
-          <UserOutput />
+          <UserOutput name="Boss" />
+          <UserOutput name="Bosun" />
+          <UserOutput name="Deckhand" />
         </article>
       </div>
     );
