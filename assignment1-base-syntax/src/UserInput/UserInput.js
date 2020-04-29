@@ -5,7 +5,11 @@ class UserInput extends Component {
     return (
       <div>
         Change First user name:{' '}
-        <input type="text" onChange={this.props.change} />
+        <input
+          type="text"
+          value={this.props.name}
+          onChange={this.props.change}
+        />
       </div>
     );
   }
