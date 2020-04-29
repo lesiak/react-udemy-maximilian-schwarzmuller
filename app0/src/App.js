@@ -13,10 +13,10 @@ class App extends Component {
       "setState merges current state with the update, this is not removed",
   };
 
-  switchNameHandler = () => {
+  switchNameHandler = (newName) => {
     this.setState({
       persons: [
-        { name: "Maximilian", age: 28 },
+        { name: newName, age: 28 },
         { name: "Manu", age: 29 },
         { name: "Stephanie", age: 27 },
       ],
@@ -28,7 +28,9 @@ class App extends Component {
       <div className="App">
         <h1>I'm a react app</h1>
         <p>This is really working</p>
-        <button onClick={this.switchNameHandler}>Switch name</button>
+        <button onClick={this.switchNameHandler.bind(this, "Maximilian")}>
+          Switch name
+        </button>
         <Person
           name={this.state.persons[0].name}
           age={this.state.persons[0].age}
@@ -36,7 +38,7 @@ class App extends Component {
         <Person
           name={this.state.persons[1].name}
           age={this.state.persons[1].age}
-          click={this.switchNameHandler}
+          click={this.switchNameHandler.bind(this, "Max!!!!")}
         >
           My hobbies: Racing
         </Person>
