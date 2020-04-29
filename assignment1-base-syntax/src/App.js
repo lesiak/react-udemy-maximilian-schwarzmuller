@@ -4,6 +4,10 @@ import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
 
 class App extends Component {
+  state = {
+    crew: [{ name: 'Boss' }, { name: 'Bosun' }, { name: 'Deckhand' }],
+  };
+
   render() {
     return (
       <div className="App">
@@ -53,9 +57,9 @@ class App extends Component {
         </header>
         <article>
           <UserInput />
-          <UserOutput name="Boss" />
-          <UserOutput name="Bosun" />
-          <UserOutput name="Deckhand" />
+          <UserOutput name={this.state.crew[0].name} />
+          <UserOutput name={this.state.crew[1].name} />
+          <UserOutput name={this.state.crew[2].name} />
         </article>
       </div>
     );
