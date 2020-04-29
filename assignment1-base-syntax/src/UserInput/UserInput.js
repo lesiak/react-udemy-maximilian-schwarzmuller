@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import './UserInput.css';
 
 class UserInput extends Component {
   render() {
     return (
-      <div>
+      <div className="UserInput">
         Change First user name:{' '}
         <input
           type="text"
