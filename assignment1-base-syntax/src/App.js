@@ -67,7 +67,10 @@ class App extends Component {
           </div>
         </header>
         <article>
-          <UserInput change={this.nameChangeHandler} />
+          <UserInput
+            name={this.state.crew[0].name}
+            change={this.nameChangeHandler}
+          />
           <UserOutput name={this.state.crew[0].name} />
           <UserOutput name={this.state.crew[1].name} />
           <UserOutput name={this.state.crew[2].name} />
