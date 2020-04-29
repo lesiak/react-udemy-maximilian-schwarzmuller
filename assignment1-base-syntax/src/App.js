@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import UserInput from './UserInput/UserInput';
+import UserOutput from './UserOutput/UserOutput';
 
 function App() {
   return (
@@ -46,6 +48,12 @@ function App() {
           </ol>
         </div>
       </header>
+      <article>
+        <UserInput />
+        <UserOutput />
+        <UserOutput />
+        <UserOutput />
+      </article>
     </div>
   );
 }
