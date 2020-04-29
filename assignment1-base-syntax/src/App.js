@@ -8,7 +8,18 @@ class App extends Component {
     crew: [{ name: 'Boss' }, { name: 'Bosun' }, { name: 'Deckhand' }],
   };
 
-  render() {
+  nameChangeHandler = (event) => {
+    const newState = {
+      crew: [
+        { name: event.target.value },
+        { name: 'Bosun' },
+        { name: 'Deckhand' },
+      ],
+    };
+    this.setState(newState);
+  };
+
+  render = () => {
     return (
       <div className="App">
         <header className="App-header">
@@ -56,14 +67,14 @@ class App extends Component {
           </div>
         </header>
         <article>
-          <UserInput />
+          <UserInput change={this.nameChangeHandler} />
           <UserOutput name={this.state.crew[0].name} />
           <UserOutput name={this.state.crew[1].name} />
           <UserOutput name={this.state.crew[2].name} />
         </article>
       </div>
     );
-  }
+  };
 }
 
 export default App;
