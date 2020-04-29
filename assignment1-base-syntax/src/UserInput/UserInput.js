@@ -4,7 +4,8 @@ class UserInput extends Component {
   render() {
     return (
       <div>
-        User Input: <input type="text" />
+        Change First user name:{' '}
+        <input type="text" onChange={this.props.change} />
       </div>
     );
   }
