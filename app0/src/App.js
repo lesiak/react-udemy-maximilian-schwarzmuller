@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import "./App.css";
-import Person from "./Person/Person";
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
 
 class App extends Component {
   state = {
     persons: [
-      { name: "Max", age: 28 },
-      { name: "Manu I react to click", age: 29 },
-      { name: "Stephanie", age: 26 },
+      { name: 'Max', age: 28 },
+      { name: 'Manu I react to click', age: 29 },
+      { name: 'Stephanie', age: 26 },
     ],
     otherState:
-      "setState merges current state with the update, this is not removed",
+      'setState merges current state with the update, this is not removed',
   };
 
   switchNameHandler = (newName) => {
     this.setState({
       persons: [
         { name: newName, age: 28 },
-        { name: "Manu", age: 29 },
-        { name: "Stephanie", age: 27 },
+        { name: 'Manu', age: 29 },
+        { name: 'Stephanie', age: 27 },
       ],
     });
   };
@@ -26,20 +26,20 @@ class App extends Component {
   nameChangedHandler = (event) => {
     this.setState({
       persons: [
-        { name: "Max", age: 28 },
+        { name: 'Max', age: 28 },
         { name: event.target.value, age: 29 },
-        { name: "Stephanie", age: 26 },
+        { name: 'Stephanie', age: 26 },
       ],
     });
   };
 
   render() {
     const buttonStyle = {
-      backgroundColor: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer',
     };
 
     return (
@@ -48,7 +48,7 @@ class App extends Component {
         <p>This is really working</p>
         <button
           style={buttonStyle}
-          onClick={() => this.switchNameHandler("Maximilian")}
+          onClick={() => this.switchNameHandler('Maximilian')}
         >
           Switch name
         </button>
@@ -59,7 +59,7 @@ class App extends Component {
         <Person
           name={this.state.persons[1].name}
           age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, "Max!!!!")}
+          click={this.switchNameHandler.bind(this, 'Max!!!!')}
           changed={this.nameChangedHandler}
         >
           My hobbies: Racing
