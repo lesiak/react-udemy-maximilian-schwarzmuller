@@ -6,7 +6,7 @@ class App extends Component {
   state = {
     persons: [
       { name: "Max", age: 28 },
-      { name: "Manu", age: 29 },
+      { name: "Manu I react to click", age: 29 },
       { name: "Stephanie", age: 26 },
     ],
     otherState:
@@ -36,6 +36,7 @@ class App extends Component {
         <Person
           name={this.state.persons[1].name}
           age={this.state.persons[1].age}
+          click={this.switchNameHandler}
         >
           My hobbies: Racing
         </Person>
