@@ -56,29 +56,33 @@ class App extends Component {
         <button style={buttonStyle} onClick={this.togglePersonsHandler}>
           Show / Hide
         </button>
-        {this.state.showPersons ? (
-          <div>
-            <Person
-              name={this.state.persons[0].name}
-              age={this.state.persons[0].age}
-            />
-            <Person
-              name={this.state.persons[1].name}
-              age={this.state.persons[1].age}
-              click={this.switchNameHandler.bind(this, 'Max!!!!')}
-              changed={this.nameChangedHandler}
-            >
-              My hobbies: Racing
-            </Person>
-            <Person
-              name={this.state.persons[2].name}
-              age={this.state.persons[2].age}
-            />
-          </div>
-        ) : null}
+        {this.renderPersons()}
         <p>{this.state.otherState}</p>
       </div>
     );
+  }
+
+  renderPersons() {
+    return this.state.showPersons ? (
+      <div>
+        <Person
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+        />
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[1].age}
+          click={this.switchNameHandler.bind(this, 'Max!!!!')}
+          changed={this.nameChangedHandler}
+        >
+          My hobbies: Racing
+        </Person>
+        <Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[2].age}
+        />
+      </div>
+    ) : null;
   }
 }
 
