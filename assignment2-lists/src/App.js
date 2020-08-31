@@ -2,11 +2,21 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
+  state = {
+    text: '',
+  };
+
+  onInputChanged = (event) => {
+    this.setState({ text: event.target.value });
+  };
+
   render() {
     return (
       <>
         <header className="app-header">{this.renderTaskList()}</header>
         <main className="app-main">
+          <input type="text" onChange={this.onInputChanged} />
+          <p>Text length: {this.state.text.length}</p>
         </main>
       </>
     );
