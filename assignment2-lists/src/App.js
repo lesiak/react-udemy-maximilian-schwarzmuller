@@ -12,6 +12,13 @@ class App extends Component {
     this.setState({ text: event.target.value });
   };
 
+  onLetterClicked = (index) => {
+    const newTextArr = this.state.text.split('');
+    newTextArr.splice(index, 1);
+    const newText = newTextArr.join('');
+    this.setState({ text: newText });
+  };
+
   render() {
     return (
       <>
@@ -20,8 +27,11 @@ class App extends Component {
           <input type="text" onChange={this.onInputChanged} />
           <p>Text length: {this.state.text.length}</p>
           <ValidationComponent text={this.state.text} />
-          {this.state.text.split('').map((letter) => (
-            <CharComponent text={letter} />
+          {this.state.text.split('').map((letter, index) => (
+            <CharComponent
+              text={letter}
+              onClick={() => this.onLetterClicked(index)}
+            />
           ))}
         </main>
       </>
