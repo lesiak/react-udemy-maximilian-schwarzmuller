@@ -24,7 +24,11 @@ class App extends Component {
       <>
         <header className="app-header">{this.renderTaskList()}</header>
         <main className="app-main">
-          <input type="text" onChange={this.onInputChanged} />
+          <input
+            type="text"
+            value={this.state.text}
+            onChange={this.onInputChanged}
+          />
           <p>Text length: {this.state.text.length}</p>
           <ValidationComponent text={this.state.text} />
           {this.state.text.split('').map((letter, index) => (
