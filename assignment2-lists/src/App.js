@@ -29,6 +29,7 @@ class App extends Component {
           <ValidationComponent text={this.state.text} />
           {this.state.text.split('').map((letter, index) => (
             <CharComponent
+              key={letter + index}
               text={letter}
               onClick={() => this.onLetterClicked(index)}
             />
