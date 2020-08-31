@@ -5,9 +5,9 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Manu I react to click', age: 29 },
-      { name: 'Stephanie', age: 26 },
+      { id: 'person0', name: 'Max', age: 28 },
+      { id: 'person1', name: 'Manu I react to click', age: 29 },
+      { id: 'person2', name: 'Stephanie', age: 26 },
     ],
     otherState:
       'setState merges current state with the update, this is not removed',
@@ -70,6 +70,7 @@ class App extends Component {
               name={person.name}
               age={person.age}
               click={() => this.deletePersonHandler(index)}
+              key={person.id}
             />
           );
         })}
