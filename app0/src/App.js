@@ -53,12 +53,16 @@ class App extends Component {
       cursor: 'pointer',
     };
 
+    if (this.state.showPersons) {
+      buttonStyle.backgroundColor = 'salmon';
+    }
+
     return (
       <div className="App">
         <h1>I'm a react app</h1>
         <p>This is really working</p>
         <button style={buttonStyle} onClick={this.togglePersonsHandler}>
-          Show / Hide
+          {this.state.showPersons ? 'Hide' : 'Show'}
         </button>
         {this.renderPersons()}
         <p>{this.state.otherState}</p>
