@@ -1,4 +1,4 @@
-/* .Person {
+.Person {
   width: 60%;
   margin: 16px auto;
   border: 1px solid #eee;
@@ -9,6 +9,6 @@
 
 @media (min-width: 1000px) {
   .Person {
-    width: '800px';
+    width: 600px;
   }
-} */
+}
