@@ -4,14 +4,14 @@ import Person from './Person/Person';
 import './App.css';
 
 const StyledButton = styled.button`
-  background-color: white;
+  background-color: ${(props) => (props.buttonStateOn ? 'salmon' : 'white')};
   font: inherit;
   border: 1px solid blue;
   padding: 8px;
   cursor: pointer;
 
   &:hover {
-    background-color: lightGreen;
+    background-color: ${(props) => (props.buttonStateOn ? 'red' : 'lightGreen')};
     color: black;
   },
 `;
@@ -23,8 +23,7 @@ class App extends Component {
       { id: 'person1', name: 'Manu I react to click', age: 29 },
       { id: 'person2', name: 'Stephanie', age: 26 },
     ],
-    otherState:
-      'setState merges current state with the update, this is not removed',
+    otherState: 'setState merges current state with the update, this is not removed',
     showPersons: false,
   };
 
@@ -83,7 +82,7 @@ class App extends Component {
       <div className="App">
         <h1>I'm a react app</h1>
         <p className={classes.join(' ')}>This is really working</p>
-        <StyledButton onClick={this.togglePersonsHandler}>
+        <StyledButton buttonStateOn={this.state.showPersons} onClick={this.togglePersonsHandler}>
           {this.state.showPersons ? 'Hide' : 'Show'}
         </StyledButton>
         {this.renderPersons()}
