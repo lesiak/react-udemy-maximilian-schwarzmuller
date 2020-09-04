@@ -4,6 +4,14 @@ import Persons from '../components/Persons/Persons';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+    // state initialization this.state = {some props}
+    // setting state in class body is equivalent and available in modern JS
+    // do not use this.setState - there is no state to merge with
+  }
+
   state = {
     persons: [
       { id: 'person0', name: 'Max', age: 28 },
@@ -12,6 +20,15 @@ class App extends Component {
     ],
     showPersons: false,
   };
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
+  }
 
   deletePersonHandler = (index) => {
     // const personsCopy = this.state.persons.slice();
@@ -44,6 +61,7 @@ class App extends Component {
   };
 
   render() {
+    console.log('[App.js] render');
     return (
       <div className="App">
         <Cockpit
