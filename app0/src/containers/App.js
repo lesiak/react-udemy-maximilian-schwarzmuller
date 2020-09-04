@@ -10,7 +10,6 @@ class App extends Component {
       { id: 'person1', name: 'Manu I react to click', age: 29 },
       { id: 'person2', name: 'Stephanie', age: 26 },
     ],
-    otherState: 'setState merges current state with the update, this is not removed',
     showPersons: false,
   };
 
@@ -53,7 +52,6 @@ class App extends Component {
           onToggleShowPersons={this.togglePersonsHandler}
         />
         {this.renderPersons()}
-        <p>{this.state.otherState}</p>
       </div>
     );
   }
