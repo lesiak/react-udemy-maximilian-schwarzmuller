@@ -58,11 +58,7 @@ class App extends Component {
       <div className="App">
         <h1>I'm a react app</h1>
         <p className={classes.join(' ')}>This is really working</p>
-        <button
-          className={getToggleButtonClassName()}
-          buttonStateOn={this.state.showPersons}
-          onClick={this.togglePersonsHandler}
-        >
+        <button className={getToggleButtonClassName()} onClick={this.togglePersonsHandler}>
           {this.state.showPersons ? 'Hide' : 'Show'}
         </button>
         {this.renderPersons()}
