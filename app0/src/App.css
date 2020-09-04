@@ -19,3 +19,24 @@
 .bold {
   font-weight: bold;
 }
+
+.toggleButton {
+  background-color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.toggleButton:hover {
+  background-color: lightGreen;
+  color: black;
+}
+
+.toggleButton.on {
+  background-color: salmon;
+}
+
+.toggleButton.on:hover {
+  background-color: red;
+}
