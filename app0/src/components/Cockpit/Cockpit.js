@@ -16,7 +16,7 @@ const cockpit = (props) => {
 
   return (
     <>
-      <h1>I'm a react app</h1>
+      <h1>{props.title}</h1>
       <p className={statusClasses.join(' ')}>This is really working</p>
       <button className={getToggleButtonClassName()} onClick={props.onToggleShowPersons}>
         {props.showPersons ? 'Hide' : 'Show'}

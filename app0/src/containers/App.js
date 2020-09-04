@@ -50,6 +50,7 @@ class App extends Component {
           persons={this.state.persons}
           showPersons={this.state.showPersons}
           onToggleShowPersons={this.togglePersonsHandler}
+          title={this.props.appTitle}
         />
         {this.renderPersons()}
       </div>
