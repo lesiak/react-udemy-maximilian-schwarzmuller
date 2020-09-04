@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Person from './Person/Person';
+import Cockpit from '../components/Cockpit/Cockpit';
+import Persons from '../components/Persons/Persons';
 import './App.css';
 
 class App extends Component {
@@ -44,23 +45,13 @@ class App extends Component {
   };
 
   render() {
-    const getToggleButtonClassName = () => (this.state.showPersons ? 'toggleButton on' : 'toggleButton');
-
-    const classes = [];
-    if (this.state.persons.length <= 2) {
-      classes.push('red');
-    }
-    if (this.state.persons.length <= 1) {
-      classes.push('bold');
-    }
-
     return (
       <div className="App">
-        <h1>I'm a react app</h1>
-        <p className={classes.join(' ')}>This is really working</p>
-        <button className={getToggleButtonClassName()} onClick={this.togglePersonsHandler}>
-          {this.state.showPersons ? 'Hide' : 'Show'}
-        </button>
+        <Cockpit
+          persons={this.state.persons}
+          showPersons={this.state.showPersons}
+          onToggleShowPersons={this.togglePersonsHandler}
+        />
         {this.renderPersons()}
         <p>{this.state.otherState}</p>
       </div>
@@ -70,17 +61,7 @@ class App extends Component {
   renderPersons() {
     return this.state.showPersons ? (
       <div>
-        {this.state.persons.map((person, index) => {
-          return (
-            <Person
-              name={person.name}
-              age={person.age}
-              click={() => this.deletePersonHandler(index)}
-              key={person.id}
-              changed={(event) => this.nameChangedHandler(event, person.id)}
-            />
-          );
-        })}
+        <Persons persons={this.state.persons} clicked={this.deletePersonHandler} changed={this.nameChangedHandler} />
       </div>
     ) : null;
   }
