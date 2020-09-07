@@ -4,8 +4,8 @@ import cssClasses from './Cockpit.module.css';
 
 const Cockpit = (props) => {
   useEffect(() => {
-    console.log('[Cockpit.js] useEffect');
-  });
+    console.log('[Cockpit.js] useEffect that depends on props.persons');
+  }, [props.persons]);
 
   const getToggleButtonClassName = () =>
     props.showPersons ? `${cssClasses.toggleButton} ${cssClasses.on}` : `${cssClasses.toggleButton}`;
