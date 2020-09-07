@@ -5,7 +5,13 @@ import cssClasses from './Cockpit.module.css';
 const Cockpit = (props) => {
   useEffect(() => {
     console.log('[Cockpit.js] useEffect that runs only once');
+    return () => console.log('[Cockpit.js] Cleanup work in useEffect');
   }, []);
+
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect2 every render');
+    return () => console.log('[Cockpit.js] useEffect2 cleanup');
+  });
 
   const getToggleButtonClassName = () =>
     props.showPersons ? `${cssClasses.toggleButton} ${cssClasses.on}` : `${cssClasses.toggleButton}`;
