@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import AuxFragment from '../../hoc/AuxFragment';
 import AuthContext from '../../context/auth-context';
 import cssClasses from './Cockpit.module.css';
 
 const Cockpit = (props) => {
   const toggleBtnRef = useRef(null);
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
     console.log('[Cockpit.js] useEffect that runs only once');
@@ -35,13 +36,9 @@ const Cockpit = (props) => {
       <button className={getToggleButtonClassName()} onClick={props.onToggleShowPersons} ref={toggleBtnRef}>
         {props.showPersons ? 'Hide' : 'Show'}
       </button>
-      <AuthContext.Consumer>
-        {(context) => (
-          <button className={cssClasses.toggleButton} onClick={context.login}>
-            Log in
-          </button>
-        )}
-      </AuthContext.Consumer>
+      <button className={cssClasses.toggleButton} onClick={authContext.login}>
+        Log in
+      </button>
     </AuxFragment>
   );
 };
