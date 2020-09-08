@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
+import withClass from '../hoc/WithClass';
 import './App.css';
-import WithClass from '../hoc/WithClass';
 
 class App extends Component {
   constructor(props) {
@@ -74,7 +74,7 @@ class App extends Component {
   render() {
     console.log('[App.js] render');
     return (
-      <WithClass classes="App">
+      <div>
         <button onClick={() => this.setState({ showCockpit: false })}>Remove cockpit</button>
         {this.state.showCockpit ? (
           <Cockpit
@@ -85,7 +85,7 @@ class App extends Component {
           />
         ) : null}
         {this.renderPersons()}
-      </WithClass>
+      </div>
     );
   }
 
@@ -98,4 +98,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withClass(App, 'App');
