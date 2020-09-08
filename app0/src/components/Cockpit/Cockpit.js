@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import cssClasses from './Cockpit.module.css';
+import AuxFragment from '../../hoc/AuxFragment';
 
 const Cockpit = (props) => {
   useEffect(() => {
@@ -25,13 +26,13 @@ const Cockpit = (props) => {
   }
 
   return (
-    <>
+    <AuxFragment>
       <h1>{props.title}</h1>
       <p className={statusClasses.join(' ')}>This is really working</p>
       <button className={getToggleButtonClassName()} onClick={props.onToggleShowPersons}>
         {props.showPersons ? 'Hide' : 'Show'}
       </button>
-    </>
+    </AuxFragment>
   );
 };
 
