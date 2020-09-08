@@ -35,6 +35,9 @@ const Cockpit = (props) => {
       <button className={getToggleButtonClassName()} onClick={props.onToggleShowPersons} ref={toggleBtnRef}>
         {props.showPersons ? 'Hide' : 'Show'}
       </button>
+      <button className={cssClasses.toggleButton} onClick={props.login}>
+        Log in
+      </button>
     </AuxFragment>
   );
 };
