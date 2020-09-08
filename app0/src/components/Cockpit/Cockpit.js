@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-
-import cssClasses from './Cockpit.module.css';
 import AuxFragment from '../../hoc/AuxFragment';
+import AuthContext from '../../context/auth-context';
+import cssClasses from './Cockpit.module.css';
 
 const Cockpit = (props) => {
   const toggleBtnRef = useRef(null);
@@ -35,9 +35,13 @@ const Cockpit = (props) => {
       <button className={getToggleButtonClassName()} onClick={props.onToggleShowPersons} ref={toggleBtnRef}>
         {props.showPersons ? 'Hide' : 'Show'}
       </button>
-      <button className={cssClasses.toggleButton} onClick={props.login}>
-        Log in
-      </button>
+      <AuthContext.Consumer>
+        {(context) => (
+          <button className={cssClasses.toggleButton} onClick={context.login}>
+            Log in
+          </button>
+        )}
+      </AuthContext.Consumer>
     </AuxFragment>
   );
 };
