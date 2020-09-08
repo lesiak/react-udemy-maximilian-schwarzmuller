@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import cssClasses from './Cockpit.module.css';
 import AuxFragment from '../../hoc/AuxFragment';
 
 const Cockpit = (props) => {
+  const toggleBtnRef = useRef(null);
+
   useEffect(() => {
     console.log('[Cockpit.js] useEffect that runs only once');
+    toggleBtnRef.current.click();
     return () => console.log('[Cockpit.js] Cleanup work in useEffect');
   }, []);
 
@@ -29,7 +32,7 @@ const Cockpit = (props) => {
     <AuxFragment>
       <h1>{props.title}</h1>
       <p className={statusClasses.join(' ')}>This is really working</p>
-      <button className={getToggleButtonClassName()} onClick={props.onToggleShowPersons}>
+      <button className={getToggleButtonClassName()} onClick={props.onToggleShowPersons} ref={toggleBtnRef}>
         {props.showPersons ? 'Hide' : 'Show'}
       </button>
     </AuxFragment>
