@@ -4,15 +4,14 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import cssClasses from './Burger.module.css';
 
 const Burger = (props) => {
-  // return array of arrays is acceptable
-  const ingredientComponents = Object.entries(props.ingredients).map(([ingName, amount]) =>
+  const ingredientComponents = Object.entries(props.ingredients).flatMap(([ingName, amount]) =>
     [...Array(amount)].map((x, i) => <BurgerIngredient key={ingName + i} type={ingName} />)
   );
 
   return (
     <div className={cssClasses.burger}>
       <BurgerIngredient type="bread-top" />
-      {ingredientComponents}
+      {ingredientComponents.length ? ingredientComponents : <p>Please start adding ingredients</p>}
       <BurgerIngredient type="bread-bottom" />
     </div>
   );
