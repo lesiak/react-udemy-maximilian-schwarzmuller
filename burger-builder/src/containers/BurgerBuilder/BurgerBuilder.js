@@ -58,12 +58,9 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    const disabledInfo = {
-      ...this.state.ingredients,
-    };
-    for (let key in disabledInfo) {
-      disabledInfo[key] = disabledInfo[key] <= 0;
-    }
+    const disabledInfo = Object.fromEntries(
+      Object.entries(this.state.ingredients).map(([ingr, amount]) => [ingr, amount <= 0])
+    );
     return (
       <>
         <Burger ingredients={this.state.ingredients} />
