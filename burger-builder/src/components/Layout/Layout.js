@@ -6,7 +6,7 @@ import cssClasses from './Layout.module.css';
 
 class Layout extends Component {
   state = {
-    showSideDrawer: true,
+    showSideDrawer: false,
   };
 
   sideDrawerClosedHandler = () => {
@@ -15,11 +15,17 @@ class Layout extends Component {
     });
   };
 
+  sideDrawerToggledHandler = () => {
+    this.setState((prevState) => ({
+      showSideDrawer: !prevState.showSideDrawer,
+    }));
+  };
+
   render() {
     return (
       <>
         <div>
-          <Toolbar />
+          <Toolbar onDrawerToggleClicked={this.sideDrawerToggledHandler} />
           <SideDrawer open={this.state.showSideDrawer} onClose={this.sideDrawerClosedHandler} />
         </div>
         <main className={cssClasses.content}>{this.props.children}</main>
