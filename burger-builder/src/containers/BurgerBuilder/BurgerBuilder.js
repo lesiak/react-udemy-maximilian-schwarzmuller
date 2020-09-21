@@ -16,17 +16,26 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0,
-    },
+    ingredients: null,
     totalPrice: 4,
     purchasable: false,
     purchasing: false,
     loading: false,
+    ingredientsError: false,
   };
+
+  componentDidMount() {
+    axios
+      .get('/ingredients.json')
+      .then((response) => {
+        this.setState({ ingredients: response.data });
+      })
+      .catch((error) => {
+        this.setState({
+          ingredientsError: true,
+        });
+      });
+  }
 
   updatePurchaseState(updatedIngredients) {
     const sumAmount = Object.entries(updatedIngredients)
@@ -107,13 +116,12 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    const disabledInfo = Object.fromEntries(
-      Object.entries(this.state.ingredients).map(([ingr, amount]) => [ingr, amount <= 0])
-    );
+    const disabledInfo = () =>
+      Object.fromEntries(Object.entries(this.state.ingredients).map(([ingr, amount]) => [ingr, amount <= 0]));
     return (
       <>
         <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-          {this.state.loading ? (
+          {this.state.loading || !this.state.ingredients ? (
             <Spinner />
           ) : (
             <OrderSummary
@@ -124,15 +132,23 @@ class BurgerBuilder extends Component {
             />
           )}
         </Modal>
-        <Burger ingredients={this.state.ingredients} />
-        <BuildControls
-          ingredientAdded={this.addIngredientHandler}
-          ingredientRemoved={this.removeIngredientHandler}
-          disabledInfo={disabledInfo}
-          totalPrice={this.state.totalPrice}
-          purchasable={this.state.purchasable}
-          orderClicked={this.purchaseHandler}
-        />
+        {this.state.ingredients ? (
+          <>
+            <Burger ingredients={this.state.ingredients} />
+            <BuildControls
+              ingredientAdded={this.addIngredientHandler}
+              ingredientRemoved={this.removeIngredientHandler}
+              disabledInfo={disabledInfo()}
+              totalPrice={this.state.totalPrice}
+              purchasable={this.state.purchasable}
+              orderClicked={this.purchaseHandler}
+            />
+          </>
+        ) : this.state.ingredientsError ? (
+          <p>Ingredients can't be loaded</p>
+        ) : (
+          <Spinner />
+        )}
       </>
     );
   }
