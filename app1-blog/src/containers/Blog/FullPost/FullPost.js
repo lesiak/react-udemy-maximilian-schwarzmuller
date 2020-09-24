@@ -8,14 +8,16 @@ class FullPost extends Component {
     loadedPost: null,
   };
 
-  componentDidUpdate() {
-    if (!this.props.id) {
+  componentDidMount() {
+    console.log(this.props);
+    const newId = this.props.match.params.id;
+    if (!newId) {
       return;
     }
-    if (this.state.loadedPost && this.state.loadedPost.id === this.props.id) {
+    if (this.state.loadedPost && this.state.loadedPost.id === newId) {
       return;
     }
-    axios.get('/posts/' + this.props.id).then((response) => this.setState({ loadedPost: response.data }));
+    axios.get('/posts/' + newId).then((response) => this.setState({ loadedPost: response.data }));
   }
 
   deletePostHandler = () => {
