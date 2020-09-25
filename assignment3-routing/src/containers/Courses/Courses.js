@@ -19,7 +19,13 @@ class Courses extends Component {
         <section className="Courses">
           {this.state.courses.map((course) => {
             return (
-              <Link key={course.id} to={'/courses/' + course.id}>
+              <Link
+                key={course.id}
+                to={{
+                  pathname: '/courses/' + course.id,
+                  search: '?title=' + course.title,
+                }}
+              >
                 <article className="Course">{course.title}</article>
               </Link>
             );
