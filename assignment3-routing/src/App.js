@@ -4,13 +4,23 @@ import Courses from './containers/Courses/Courses';
 import Users from './containers/Users/Users';
 
 import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <header className="app-header">{this.renderTaskList()}</header>
+        <nav>
+          <ul>
+            <li>
+              <NavLink to="/users">Users</NavLink>
+            </li>
+            <li>
+              <NavLink to="/courses">Courses</NavLink>
+            </li>
+          </ul>
+        </nav>
         <main className="app-main">
           <Route path="/users" component={Users} />
           <Route path="/courses" component={Courses} />
