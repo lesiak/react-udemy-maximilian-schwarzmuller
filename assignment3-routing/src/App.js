@@ -4,14 +4,18 @@ import Courses from './containers/Courses/Courses';
 import Users from './containers/Users/Users';
 
 import './App.css';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
-      <>
+      <BrowserRouter>
         <header className="app-header">{this.renderTaskList()}</header>
-        <main className="app-main"></main>
-      </>
+        <main className="app-main">
+          <Route path="/users" component={Users} />
+          <Route path="/courses" component={Courses} />
+        </main>
+      </BrowserRouter>
     );
   }
 
