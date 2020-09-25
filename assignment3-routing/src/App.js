@@ -4,7 +4,8 @@ import Courses from './containers/Courses/Courses';
 import Users from './containers/Users/Users';
 
 import './App.css';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
+import NotFound from './components/NotFound/NotFound';
 
 class App extends Component {
   render() {
@@ -22,8 +23,11 @@ class App extends Component {
           </ul>
         </nav>
         <main className="app-main">
-          <Route path="/users" component={Users} />
-          <Route path="/courses" component={Courses} />
+          <Switch>
+            <Route path="/users" component={Users} />
+            <Route path="/courses" component={Courses} />
+            <Route component={NotFound} />
+          </Switch>
         </main>
       </BrowserRouter>
     );
