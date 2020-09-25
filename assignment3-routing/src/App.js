@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Courses from './containers/Courses/Courses';
-import Course from './containers/Course/Course';
 import Users from './containers/Users/Users';
 
 import './App.css';
@@ -24,8 +23,7 @@ class App extends Component {
         </nav>
         <main className="app-main">
           <Route path="/users" component={Users} />
-          <Route path="/courses" exact component={Courses} />
-          <Route path="/courses/:id" component={Course} />
+          <Route path="/courses" component={Courses} />
         </main>
       </BrowserRouter>
     );
