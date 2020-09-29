@@ -79,6 +79,7 @@ class ContactData extends Component {
           ],
         },
         value: 'fastest',
+        valid: true,
       },
     },
     loading: false,
@@ -141,6 +142,7 @@ class ContactData extends Component {
             elementType={config.elementType}
             elementConfig={config.elementConfig}
             value={config.value}
+            invalid={!config.valid}
             onChange={(event) => this.inputChangedHandler(id, event)}
           />
         ))}
