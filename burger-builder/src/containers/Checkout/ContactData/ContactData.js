@@ -88,13 +88,31 @@ class ContactData extends Component {
       .catch((error) => this.setState({ loading: false }));
   };
 
+  inputChangedHandler = (inputIdenfifier, event) => {
+    // console.log(event.target.value);
+    const updatedForm = {
+      ...this.state.orderForm,
+    };
+    const updatedFormElement = { ...updatedForm[inputIdenfifier] };
+    updatedFormElement.value = event.target.value;
+    updatedForm[inputIdenfifier] = updatedFormElement;
+
+    this.setState({ orderForm: updatedForm });
+  };
+
   render() {
     const form = this.state.loading ? (
       <Spinner />
     ) : (
       <form>
         {Object.entries(this.state.orderForm).map(([id, config]) => (
-          <Input key={id} elementType={config.elementType} elementConfig={config.elementConfig} value={config.value} />
+          <Input
+            key={id}
+            elementType={config.elementType}
+            elementConfig={config.elementConfig}
+            value={config.value}
+            onChange={(event) => this.inputChangedHandler(id, event)}
+          />
         ))}
         <Button btnType="success" onClick={this.orderHandler}>
           ORDER
