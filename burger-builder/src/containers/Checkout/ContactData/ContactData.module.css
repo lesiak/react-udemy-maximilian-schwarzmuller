@@ -7,10 +7,6 @@
   box-sizing: border-box;
 }
 
-.contactdata input {
-  display: block;
-}
-
 @media (min-width: 1024px) {
   .contactdata {
     width: 980px;
