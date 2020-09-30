@@ -1,7 +1,11 @@
 const redux = require('redux');
 
+const initialState = {
+  counter: 0,
+};
+
 // Reducer
-const rootReducer = (state, action) => {
+const rootReducer = (state = initialState, action) => {
   return state;
 };
 
