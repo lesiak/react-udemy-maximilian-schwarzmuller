@@ -123,8 +123,12 @@ class ContactData extends Component {
     return isValid;
   };
 
+  formIsValid = () => {
+    const formValid = Object.entries(this.state.orderForm).every(([_id, config]) => config.valid);
+    return formValid;
+  };
+
   inputChangedHandler = (inputIdenfifier, event) => {
-    // console.log(event.target.value);
     const updatedForm = {
       ...this.state.orderForm,
     };
@@ -153,7 +157,9 @@ class ContactData extends Component {
             onChange={(event) => this.inputChangedHandler(id, event)}
           />
         ))}
-        <Button btnType="success">ORDER</Button>
+        <Button btnType="success" disabled={!this.formIsValid()}>
+          ORDER
+        </Button>
       </form>
     );
     return (
