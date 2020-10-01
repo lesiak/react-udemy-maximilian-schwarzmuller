@@ -11,6 +11,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         persons: state.persons.concat(action.person),
       };
+    case actionTypes.REMOVE_PERSON:
+      return {
+        ...state,
+        persons: state.persons.filter((person) => person.id !== action.personId),
+      };
     default:
       return state;
   }

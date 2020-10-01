@@ -6,10 +6,6 @@ import AddPerson from '../components/AddPerson/AddPerson';
 import * as actionTypes from '../store/actions';
 
 class Persons extends Component {
-  state = {
-    persons: [],
-  };
-
   personAddedHandler = () => {
     const newPerson = {
       id: Math.random(), // not really unique but good enough here!
@@ -17,12 +13,6 @@ class Persons extends Component {
       age: Math.floor(Math.random() * 40),
     };
     this.props.onAddPerson(newPerson);
-  };
-
-  personDeletedHandler = (personId) => {
-    this.setState((prevState) => {
-      return { persons: prevState.persons.filter((person) => person.id !== personId) };
-    });
   };
 
   render() {
@@ -34,7 +24,7 @@ class Persons extends Component {
             key={person.id}
             name={person.name}
             age={person.age}
-            clicked={() => this.personDeletedHandler(person.id)}
+            clicked={() => this.props.onRemovePerson(person.id)}
           />
         ))}
       </div>
@@ -51,6 +41,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddPerson: (person) => dispatch({ type: actionTypes.ADD_PERSON, person: person }),
+    onRemovePerson: (personId) => dispatch({ type: actionTypes.REMOVE_PERSON, personId: personId }),
   };
 };
 
