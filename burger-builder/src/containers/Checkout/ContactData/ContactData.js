@@ -32,11 +32,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Street',
         },
-        value: '',
+        value: '217 Strand',
         validation: {
           required: true,
         },
-        valid: false,
+        valid: true,
         touched: false,
       },
       zipCode: {
@@ -45,11 +45,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Postal Code',
         },
-        value: '',
+        value: 'GV7Q+82 London',
         validation: {
           required: true,
         },
-        valid: false,
+        valid: true,
         touched: false,
       },
       country: {
@@ -58,11 +58,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Country',
         },
-        value: '',
+        value: 'UK',
         validation: {
           required: true,
         },
-        valid: false,
+        valid: true,
         touched: false,
       },
       email: {
@@ -71,11 +71,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your Email',
         },
-        value: '',
+        value: 'james@secretservice.com',
         validation: {
           required: true,
         },
-        valid: false,
+        valid: true,
         touched: false,
       },
       deliveryMethod: {
