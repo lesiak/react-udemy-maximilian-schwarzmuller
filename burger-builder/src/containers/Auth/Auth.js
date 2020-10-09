@@ -4,6 +4,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import * as actions from '../../store/actions';
 import cssClasses from './Auth.module.css';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Auth extends Component {
   state = {
@@ -94,29 +95,41 @@ class Auth extends Component {
   render() {
     return (
       <div className={cssClasses.Auth}>
-        <form onSubmit={this.submitHandler}>
-          {Object.entries(this.state.controls).map(([id, config]) => (
-            <Input
-              key={id}
-              elementType={config.elementType}
-              elementConfig={config.elementConfig}
-              value={config.value}
-              invalid={!config.valid}
-              touched={config.touched}
-              onChange={(event) => this.inputChangedHandler(id, event)}
-            />
-          ))}
-          <Button btnType="success" disabled={!this.formIsValid()}>
-            {this.state.isSignInMode ? 'Sign In' : 'Sign Up'}
-          </Button>
-          <Button btnType="danger" onClick={this.swithAuthModeHandler}>
-            Swith to {this.state.isSignInMode ? 'Sign Up' : 'Sign In'}
-          </Button>
-        </form>
+        {this.props.error ? <p>{this.props.error.message}</p> : null}
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <form onSubmit={this.submitHandler}>
+            {Object.entries(this.state.controls).map(([id, config]) => (
+              <Input
+                key={id}
+                elementType={config.elementType}
+                elementConfig={config.elementConfig}
+                value={config.value}
+                invalid={!config.valid}
+                touched={config.touched}
+                onChange={(event) => this.inputChangedHandler(id, event)}
+              />
+            ))}
+            <Button btnType="success" disabled={!this.formIsValid()}>
+              {this.state.isSignInMode ? 'Sign In' : 'Sign Up'}
+            </Button>
+            <Button btnType="danger" onClick={this.swithAuthModeHandler}>
+              Swith to {this.state.isSignInMode ? 'Sign Up' : 'Sign In'}
+            </Button>
+          </form>
+        )}
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -124,4 +137,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
