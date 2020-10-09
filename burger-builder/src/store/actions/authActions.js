@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 export const authStart = () => {
@@ -23,5 +24,7 @@ export const authFail = (error) => {
 export const auth = (email, pasword) => {
   return (dispatch) => {
     dispatch(authStart());
+    const signupUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+    console.log(signupUrl);
   };
 };
