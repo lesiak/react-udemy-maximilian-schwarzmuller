@@ -21,12 +21,15 @@ export const authFail = (error) => {
   };
 };
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignIn) => {
   return (dispatch) => {
     dispatch(authStart());
-    const signupUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+    console.log('isSignIn', isSignIn);
+    const signUpUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+    const signInUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+    const url = isSignIn ? signInUrl : signUpUrl;
     axios
-      .post(signupUrl, {
+      .post(url, {
         email,
         password,
         returnSecureToken: true,
