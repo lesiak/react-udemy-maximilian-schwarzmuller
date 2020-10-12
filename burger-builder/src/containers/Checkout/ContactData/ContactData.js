@@ -8,6 +8,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../components/Hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/';
+import { checkValidity } from '../../../shared/utility';
 
 class ContactData extends Component {
   state = {
@@ -109,17 +110,6 @@ class ContactData extends Component {
     this.props.onOrderBurger(order, this.props.token);
   };
 
-  checkValidity = (value, rules) => {
-    let isValid = true;
-    if (rules?.required) {
-      isValid = isValid && value.trim() !== '';
-    }
-    if (rules?.minLength) {
-      isValid = isValid && value.length >= rules.minLength;
-    }
-    return isValid;
-  };
-
   formIsValid = () => {
     const formValid = Object.entries(this.state.orderForm).every(([_id, config]) => config.valid);
     return formValid;
@@ -131,7 +121,7 @@ class ContactData extends Component {
     };
     const updatedFormElement = { ...updatedForm[inputIdenfifier] };
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
     updatedFormElement.touched = true;
     updatedForm[inputIdenfifier] = updatedFormElement;
     console.log(updatedFormElement.valid);

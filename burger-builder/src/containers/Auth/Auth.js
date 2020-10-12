@@ -6,6 +6,7 @@ import * as actions from '../../store/actions';
 import cssClasses from './Auth.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
+import { checkValidity } from '../../shared/utility';
 
 class Auth extends Component {
   state = {
@@ -48,28 +49,6 @@ class Auth extends Component {
     }
   };
 
-  checkValidity = (value, rules) => {
-    let isValid = true;
-    if (rules?.required) {
-      isValid = isValid && value.trim() !== '';
-    }
-    if (rules?.minLength) {
-      isValid = isValid && value.length >= rules.minLength;
-    }
-    if (rules?.maxLength) {
-      isValid = isValid && value.length <= rules.maxLength;
-    }
-    if (rules?.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = isValid && pattern.test(value);
-    }
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = isValid && pattern.test(value);
-    }
-    return isValid;
-  };
-
   formIsValid = () => {
     const formValid = Object.entries(this.state.controls).every(([_id, config]) => config.valid);
     return formValid;
@@ -81,7 +60,7 @@ class Auth extends Component {
     };
     const updatedFormElement = { ...updatedForm[inputIdenfifier] };
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
     updatedFormElement.touched = true;
     updatedForm[inputIdenfifier] = updatedFormElement;
     this.setState({ controls: updatedForm });
