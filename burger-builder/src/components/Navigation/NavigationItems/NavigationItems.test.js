@@ -21,4 +21,9 @@ describe('<NavigationItems />', () => {
     wrapper.setProps({ isUserAuthenticated: true });
     expect(wrapper.find(NavigationItem)).toHaveLength(3);
   });
+
+  it('should render Logout NavigationItem element if authenticated', () => {
+    wrapper.setProps({ isUserAuthenticated: true });
+    expect(wrapper.contains(<NavigationItem to="/logout">Logout</NavigationItem>)).toEqual(true);
+  });
 });
