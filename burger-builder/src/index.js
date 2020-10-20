@@ -11,7 +11,7 @@ import * as serviceWorker from './serviceWorker';
 import burgerBuilderReducer from './store/reducers/burgerBuilderReducer';
 import orderReducer from './store/reducers/orderReducer';
 import authReducer from './store/reducers/authReducer';
-import { logoutSaga } from './store/sagas/authSaga';
+import { watchAuth } from './store/sagas';
 
 import './index.css';
 
@@ -27,7 +27,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, sagaMiddleware)));
 
-// sagaMiddleware.run(logoutSaga);
+sagaMiddleware.run(watchAuth);
 
 ReactDOM.render(
   <React.StrictMode>
