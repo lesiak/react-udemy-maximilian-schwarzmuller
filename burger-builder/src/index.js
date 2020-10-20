@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -10,6 +11,7 @@ import * as serviceWorker from './serviceWorker';
 import burgerBuilderReducer from './store/reducers/burgerBuilderReducer';
 import orderReducer from './store/reducers/orderReducer';
 import authReducer from './store/reducers/authReducer';
+import { logoutSaga } from './store/sagas/authSaga';
 
 import './index.css';
 
@@ -20,7 +22,12 @@ const rootReducer = combineReducers({
   order: orderReducer,
   auth: authReducer,
 });
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, sagaMiddleware)));
+
+// sagaMiddleware.run(logoutSaga);
 
 ReactDOM.render(
   <React.StrictMode>
