@@ -1,5 +1,6 @@
 import { put, delay } from 'redux-saga/effects';
 import * as actions from '../actions';
+import axios from 'axios';
 
 export function* logoutSaga(action) {
   yield localStorage.removeItem('token');
@@ -11,4 +12,29 @@ export function* logoutSaga(action) {
 export function* checkAuthTimeoutSaga(action) {
   yield delay(action.expirationTime * 1000);
   yield put(actions.logout());
+}
+
+export function* authUserSaga(action) {
+  yield put(actions.authStart());
+  const signUpUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+  const signInUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+  const url = action.isSignIn ? signInUrl : signUpUrl;
+  try {
+    const response = yield axios.post(url, {
+      email: action.email,
+      password: action.password,
+      returnSecureToken: true,
+    });
+    console.log(response);
+    const newTimestamp = new Date().getTime() + response.data.expiresIn * 1000;
+    const expirationDate = new Date(newTimestamp);
+    localStorage.setItem('token', response.data.idToken);
+    localStorage.setItem('expirationDate', expirationDate);
+    localStorage.setItem('userId', response.data.localId);
+    yield put(actions.authSuccess(response.data.idToken, response.data.localId));
+    yield put(actions.checkAuthTimeout(response.data.expiresIn));
+  } catch (err) {
+    console.log(err.response.data.error);
+    yield put(actions.authFail(err.response.data.error));
+  }
 }
