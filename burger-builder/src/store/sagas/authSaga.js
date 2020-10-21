@@ -38,3 +38,21 @@ export function* authUserSaga(action) {
     yield put(actions.authFail(err.response.data.error));
   }
 }
+
+export function* authCheckStateSaga(action) {
+  const token = localStorage.getItem('token');
+  const expirationDateString = localStorage.getItem('expirationDate');
+  const userId = localStorage.getItem('userId');
+  if (!token || !expirationDateString || !userId) {
+    yield put(actions.logout());
+  } else {
+    const expirationDate = new Date(expirationDateString);
+    if (expirationDate > new Date()) {
+      const expirationTime = (expirationDate.getTime() - new Date().getTime()) / 1000;
+      yield put(actions.authSuccess(token, userId));
+      yield put(actions.checkAuthTimeout(expirationTime));
+    } else {
+      yield put(actions.logout());
+    }
+  }
+}
