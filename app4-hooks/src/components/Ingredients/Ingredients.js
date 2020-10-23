@@ -7,8 +7,16 @@ import Search from './Search';
 function Ingredients() {
   const [ingredients, setIngredients] = useState([]);
 
-  const addIngredientHandler = (ingredient) => {
-    setIngredients((prevIngredients) => [...prevIngredients, { id: Math.random().toString(), ...ingredient }]);
+  const addIngredientHandler = async (ingredient) => {
+    const response = await fetch('https://react-hooks-test-6338a.firebaseio.com/ingredients.json', {
+      method: 'POST',
+      body: JSON.stringify(ingredient),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const responseData = await response.json();
+    setIngredients((prevIngredients) => [...prevIngredients, { id: responseData.name, ...ingredient }]);
   };
 
   const removeIngredientHandler = (ingredientId) => {
