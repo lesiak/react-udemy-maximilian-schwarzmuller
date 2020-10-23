@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
@@ -24,6 +24,10 @@ function Ingredients() {
     fetchData();
   }, []);
 
+  const filteredIngredientsHandler = useCallback((filteredIngredients) => {
+    setIngredients(filteredIngredients);
+  }, []);
+
   const addIngredientHandler = async (ingredient) => {
     const response = await fetch('https://react-hooks-test-6338a.firebaseio.com/ingredients.json', {
       method: 'POST',
@@ -45,7 +49,7 @@ function Ingredients() {
       <IngredientForm onAddIngredient={addIngredientHandler} />
 
       <section>
-        <Search />
+        <Search onLoadIngredients={filteredIngredientsHandler} />
         <IngredientList ingredients={ingredients} onRemoveItem={removeIngredientHandler} />
       </section>
     </div>
