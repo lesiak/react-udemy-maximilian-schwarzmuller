@@ -1,9 +1,10 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useReducer, useEffect, useCallback } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import ErrorModal from '../UI/ErrorModal';
 import Search from './Search';
+import useHttp from '../../hooks/httpHook';
 
 const ingredientReducer = (currentIngredients, action) => {
   switch (action.type) {
@@ -18,24 +19,17 @@ const ingredientReducer = (currentIngredients, action) => {
   }
 };
 
-const httpReducer = (prevHttpState, action) => {
-  switch (action.type) {
-    case 'SEND':
-      return { loading: true, error: null };
-    case 'RESPONSE':
-      return { loading: false, error: null };
-    case 'ERROR':
-      return { loading: false, error: action.errorMessage };
-    case 'CLEAR':
-      return { ...prevHttpState, error: null };
-    default:
-      throw new Error('Should not reach this line');
-  }
-};
-
 function Ingredients() {
   const [ingredients, dispatch] = useReducer(ingredientReducer, []);
-  const [httpState, dispatchHttp] = useReducer(httpReducer, { loading: false, error: null });
+  const { loading, data, error, reqData, reqIdentifier, sendRequest, clear } = useHttp();
+
+  useEffect(() => {
+    if (!loading && !error && reqIdentifier === 'DELETE_INGREDIENT') {
+      dispatch({ type: 'DELETE', ingredientId: reqData });
+    } else if (!loading && !error && reqIdentifier === 'ADD_INGREDIENT') {
+      dispatch({ type: 'ADD', ingredient: { id: data.name, ...reqData } });
+    }
+  }, [data, reqData, reqIdentifier, loading, error]);
 
   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     dispatch({
@@ -44,48 +38,40 @@ function Ingredients() {
     });
   }, []);
 
-  const addIngredientHandler = useCallback(async (ingredient) => {
-    dispatchHttp({ type: 'SEND' });
-    const response = await fetch('https://react-hooks-test-6338a.firebaseio.com/ingredients.json', {
-      method: 'POST',
-      body: JSON.stringify(ingredient),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    dispatchHttp({ type: 'RESPONSE' });
-    const responseData = await response.json();
-    const newIngredient = { id: responseData.name, ...ingredient };
-    dispatch({
-      type: 'ADD',
-      ingredient: newIngredient,
-    });
-  }, []);
+  const addIngredientHandler = useCallback(
+    (ingredient) => {
+      sendRequest(
+        'https://react-hooks-test-6338a.firebaseio.com/ingredients.json',
+        'POST',
+        JSON.stringify(ingredient),
+        ingredient,
+        'ADD_INGREDIENT'
+      );
+    },
+    [sendRequest]
+  );
 
-  const removeIngredientHandler = useCallback(async (ingredientId) => {
-    dispatchHttp({ type: 'SEND' });
-    try {
-      await fetch(`https://react-hooks-test-6338a.firebaseio.com/ingredients/${ingredientId}.json`, {
-        method: 'DELETE',
-      });
-      dispatchHttp({ type: 'RESPONSE' });
-      dispatch({
-        type: 'DELETE',
+  const removeIngredientHandler = useCallback(
+    (ingredientId) => {
+      sendRequest(
+        `https://react-hooks-test-6338a.firebaseio.com/ingredients/${ingredientId}.json`,
+        'DELETE',
+        null,
         ingredientId,
-      });
-    } catch (error) {
-      dispatchHttp({ type: 'ERROR', errorMessage: 'Something went wrong: ' + error.message });
-    }
-  }, []);
+        'DELETE_INGREDIENT'
+      );
+    },
+    [sendRequest]
+  );
 
   const clearError = useCallback(() => {
-    dispatchHttp({ type: 'CLEAR' });
-  }, []);
+    clear();
+  }, [clear]);
 
   return (
     <div className="App">
-      {httpState.error ? <ErrorModal onClose={clearError}>{httpState.error}</ErrorModal> : null}
-      <IngredientForm onAddIngredient={addIngredientHandler} loading={httpState.loading} />
+      {error ? <ErrorModal onClose={clearError}>{error}</ErrorModal> : null}
+      <IngredientForm onAddIngredient={addIngredientHandler} loading={loading} />
 
       <section>
         <Search onLoadIngredients={filteredIngredientsHandler} />
