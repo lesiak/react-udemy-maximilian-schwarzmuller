@@ -1,17 +1,33 @@
-import React, { useState, useCallback } from 'react';
+import React, { useReducer, useState, useCallback } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import ErrorModal from '../UI/ErrorModal';
 import Search from './Search';
 
+const ingredientReducer = (currentIngredients, action) => {
+  switch (action.type) {
+    case 'SET':
+      return action.ingredients;
+    case 'ADD':
+      return [...currentIngredients, action.ingredient];
+    case 'DELETE':
+      return currentIngredients.filter((ing) => ing.id !== action.ingredientId);
+    default:
+      throw new Error('Should not reach this line');
+  }
+};
+
 function Ingredients() {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, dispatch] = useReducer(ingredientReducer, []);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
-    setIngredients(filteredIngredients);
+    dispatch({
+      type: 'SET',
+      ingredients: filteredIngredients,
+    });
   }, []);
 
   const addIngredientHandler = async (ingredient) => {
@@ -25,7 +41,11 @@ function Ingredients() {
     });
     setIsLoading(false);
     const responseData = await response.json();
-    setIngredients((prevIngredients) => [...prevIngredients, { id: responseData.name, ...ingredient }]);
+    const newIngredient = { id: responseData.name, ...ingredient };
+    dispatch({
+      type: 'ADD',
+      ingredient: newIngredient,
+    });
   };
 
   const removeIngredientHandler = async (ingredientId) => {
@@ -35,7 +55,10 @@ function Ingredients() {
         method: 'DELETE',
       });
       setIsLoading(false);
-      setIngredients((prevIngredients) => prevIngredients.filter((ing) => ing.id !== ingredientId));
+      dispatch({
+        type: 'DELETE',
+        ingredientId,
+      });
     } catch (error) {
       setIsLoading(false);
       setError('Something went wrong: ' + error.message);
