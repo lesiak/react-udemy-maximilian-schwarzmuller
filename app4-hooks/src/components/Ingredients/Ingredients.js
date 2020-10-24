@@ -44,7 +44,7 @@ function Ingredients() {
     });
   }, []);
 
-  const addIngredientHandler = async (ingredient) => {
+  const addIngredientHandler = useCallback(async (ingredient) => {
     dispatchHttp({ type: 'SEND' });
     const response = await fetch('https://react-hooks-test-6338a.firebaseio.com/ingredients.json', {
       method: 'POST',
@@ -60,9 +60,9 @@ function Ingredients() {
       type: 'ADD',
       ingredient: newIngredient,
     });
-  };
+  }, []);
 
-  const removeIngredientHandler = async (ingredientId) => {
+  const removeIngredientHandler = useCallback(async (ingredientId) => {
     dispatchHttp({ type: 'SEND' });
     try {
       await fetch(`https://react-hooks-test-6338a.firebaseio.com/ingredients/${ingredientId}.json`, {
@@ -76,11 +76,11 @@ function Ingredients() {
     } catch (error) {
       dispatchHttp({ type: 'ERROR', errorMessage: 'Something went wrong: ' + error.message });
     }
-  };
+  }, []);
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     dispatchHttp({ type: 'CLEAR' });
-  };
+  }, []);
 
   return (
     <div className="App">
