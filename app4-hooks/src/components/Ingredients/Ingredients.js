@@ -2,11 +2,13 @@ import React, { useState, useCallback } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
+import ErrorModal from '../UI/ErrorModal';
 import Search from './Search';
 
 function Ingredients() {
   const [ingredients, setIngredients] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     setIngredients(filteredIngredients);
@@ -28,15 +30,25 @@ function Ingredients() {
 
   const removeIngredientHandler = async (ingredientId) => {
     setIsLoading(true);
-    await fetch(`https://react-hooks-test-6338a.firebaseio.com/ingredients/${ingredientId}.json`, {
-      method: 'DELETE',
-    });
-    setIsLoading(false);
-    setIngredients((prevIngredients) => prevIngredients.filter((ing) => ing.id !== ingredientId));
+    try {
+      await fetch(`https://react-hooks-test-6338a.firebaseio.com/ingredients/${ingredientId}.json`, {
+        method: 'DELETE',
+      });
+      setIsLoading(false);
+      setIngredients((prevIngredients) => prevIngredients.filter((ing) => ing.id !== ingredientId));
+    } catch (error) {
+      setIsLoading(false);
+      setError('Something went wrong: ' + error.message);
+    }
+  };
+
+  const clearError = () => {
+    setError(null);
   };
 
   return (
     <div className="App">
+      {error ? <ErrorModal onClose={clearError}>{error}</ErrorModal> : null}
       <IngredientForm onAddIngredient={addIngredientHandler} loading={isLoading} />
 
       <section>
