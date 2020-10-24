@@ -23,7 +23,10 @@ function Ingredients() {
     setIngredients((prevIngredients) => [...prevIngredients, { id: responseData.name, ...ingredient }]);
   };
 
-  const removeIngredientHandler = (ingredientId) => {
+  const removeIngredientHandler = async (ingredientId) => {
+    const _response = await fetch(`https://react-hooks-test-6338a.firebaseio.com/ingredients/${ingredientId}.json`, {
+      method: 'DELETE',
+    });
     setIngredients((prevIngredients) => prevIngredients.filter((ing) => ing.id !== ingredientId));
   };
 
