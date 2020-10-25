@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../src/components/Layout/Layout';
@@ -10,30 +10,28 @@ import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onAuthCheckState();
-  }
+const App = (props) => {
+  useEffect(() => {
+    props.onAuthCheckState();
+  }, []);
 
-  render() {
-    return (
-      <BrowserRouter>
-        <Layout>
-          {this.props.isUserAuthenicated ? (
-            <>
-              <Route path="/checkout" component={Checkout} />
-              <Route path="/orders" component={Orders} />
-            </>
-          ) : null}
-          <Route path="/auth" component={Auth} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={BurgerBuilder} />
-          <Redirect to="/" />
-        </Layout>
-      </BrowserRouter>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <Layout>
+        {props.isUserAuthenicated ? (
+          <>
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/orders" component={Orders} />
+          </>
+        ) : null}
+        <Route path="/auth" component={Auth} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/" exact component={BurgerBuilder} />
+        <Redirect to="/" />
+      </Layout>
+    </BrowserRouter>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
