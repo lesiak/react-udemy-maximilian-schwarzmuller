@@ -7,26 +7,15 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../components/Hoc/withErrorHandler/withErrorHandler';
-import { addIngredient, removeIngredient } from '../../store/actions/';
+import { addIngredient, removeIngredient, initIngredients } from '../../store/actions/';
 
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
-    loading: false,
-    ingredientsError: false,
   };
 
   componentDidMount() {
-    // axios
-    //   .get('/ingredients.json')
-    //   .then((response) => {
-    //     this.setState({ ingredients: response.data });
-    //   })
-    //   .catch((error) => {
-    //     this.setState({
-    //       ingredientsError: true,
-    //     });
-    //   });
+    this.props.onInitIngredients();
   }
 
   isPurchasable(ingredients) {
@@ -54,7 +43,7 @@ class BurgerBuilder extends Component {
     return (
       <>
         <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-          {this.state.loading || !this.props.ingredients ? (
+          {!this.props.ingredients ? (
             <Spinner />
           ) : (
             <OrderSummary
@@ -77,7 +66,7 @@ class BurgerBuilder extends Component {
               orderClicked={this.purchaseHandler}
             />
           </>
-        ) : this.state.ingredientsError ? (
+        ) : this.props.error ? (
           <p>Ingredients can't be loaded</p>
         ) : (
           <Spinner />
@@ -91,6 +80,7 @@ const mapStateToProps = (state) => {
   return {
     totalPrice: state.totalPrice,
     ingredients: state.ingredients,
+    error: state.error,
   };
 };
 
@@ -98,6 +88,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onIngredientAdded: (ingredientName) => dispatch(addIngredient(ingredientName)),
     onIngredientRemoved: (ingredientName) => dispatch(removeIngredient(ingredientName)),
+    onInitIngredients: () => dispatch(initIngredients()),
   };
 };
 
