@@ -74,6 +74,7 @@ const ContactData = (props) => {
       value: 'james@secretservice.com',
       validation: {
         required: true,
+        isEmail: true,
       },
       valid: true,
       touched: false,
