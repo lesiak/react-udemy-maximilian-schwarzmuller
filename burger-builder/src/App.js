@@ -11,9 +11,10 @@ import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions';
 
 const App = (props) => {
+  const { onAuthCheckState } = props;
   useEffect(() => {
-    props.onAuthCheckState();
-  }, []);
+    onAuthCheckState();
+  }, [onAuthCheckState]);
 
   return (
     <BrowserRouter>
